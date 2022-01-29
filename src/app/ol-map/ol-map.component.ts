@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -17,7 +16,7 @@ import Projection from 'ol/proj/Projection';
 import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import * as _proj4 from 'proj4';
-let proj4 = (_proj4 as any).default; // Workaround for proj4, cf. https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15663
+const proj4 = (_proj4 as any).default; // Workaround for proj4, cf. https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15663
 
 const WGS84_PROJECTION = olGetProjection('EPSG:4326');
 const WEB_MERCATOR_PROJECTION = olGetProjection('EPSG:3857');
@@ -30,12 +29,13 @@ const WEB_MERCATOR_PROJECTION = olGetProjection('EPSG:3857');
 export class OlMapComponent implements AfterViewInit {
   @Input() center: Coordinate; // WGS 84 Longitude, Latitude
   @Input() zoom: number;
+  @Output() mapReady = new EventEmitter<Map>();
+  
   view: View;
   projection: Projection;
   Map: Map;
-  @Output() mapReady = new EventEmitter<Map>();
 
-  constructor(private zone: NgZone, private cd: ChangeDetectorRef) {}
+  constructor(private zone: NgZone) {}
 
   ngAfterViewInit(): void {
     if (!this.Map) {
@@ -48,10 +48,6 @@ export class OlMapComponent implements AfterViewInit {
     // OpenLayers includes definitions for EPSG:4326 and EPSG:3857
     // Additional projections can be defined in proj4 and then registered in OpenLayers
     proj4.defs([
-      [
-        'EPSG:3857',
-        '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs',
-      ],
       [
         'EPSG:25832',
         '+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
