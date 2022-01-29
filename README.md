@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.0.
 
+- https://stackblitz.com/edit/ngx-ol-simplemap
+- https://github.com/ahocevar/ol-ng
+- https://github.com/openlayers/openlayers/issues/12546#issuecomment-1020458620
+- https://github.com/DefinitelyTyped/DefinitelyTyped/issues/15663#issuecomment-293284583
+- https://medium.com/runic-software/a-simple-guide-to-openlayers-in-angular-b10f6feb3df1
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
